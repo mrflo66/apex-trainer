@@ -1,0 +1,43 @@
+name: Build setup.exe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Version depuis le tag (v1.0.1 -> 1.0.1)
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --allow-same-version
+      - name: Configurer les mises a jour (GitHub Releases)
+        shell: bash
+        run: |
+          node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('package.json','utf8'));p.build.publish=[{provider:'github',owner:process.env.GITHUB_REPOSITORY_OWNER,repo:process.env.GITHUB_REPOSITORY.split('/')[1]}];fs.writeFileSync('package.json',JSON.stringify(p,null,2))"
+      - run: npm install
+      - run: npm run dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: setup-exe
+          path: |
+            dist/*.exe
+            dist/*.yml
+            dist/*.blockmap
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dist/*.exe
+            dist/*.yml
+            dist/*.blockmap

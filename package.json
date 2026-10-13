@@ -1,0 +1,44 @@
+{
+  "name": "entrainement-clavier-apex",
+  "version": "1.0.0",
+  "description": "Entraînement clavier pour passer de la manette au clavier sur Apex Legends",
+  "main": "main.js",
+  "author": "Entrainement Clavier Apex",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --publish never"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.apex.clavier.trainer",
+    "productName": "Entrainement Clavier Apex",
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "overlay.html",
+      "icon.png"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    },
+    "artifactName": "Setup-Entrainement-Clavier-Apex.${ext}",
+    "asarUnpack": [
+      "**/*.node"
+    ]
+  },
+  "dependencies": {
+    "uiohook-napi": "^1.5.4",
+    "electron-updater": "^6.3.9"
+  }
+}

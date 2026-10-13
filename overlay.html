@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>Overlay</title>
+<style>
+:root{--a1:#ff5fae;--a2:#4fc3f7;--bg:#14131f;--tx:#ffffff;--ok:#35d07f}
+html,body{margin:0;background:transparent;overflow:hidden;font-family:Arial,Helvetica,sans-serif;user-select:none}
+#o{display:inline-flex;align-items:flex-start;gap:12px;transform-origin:0 0;opacity:.9}
+#cl{position:relative;width:330px;height:200px}
+.k{position:absolute;display:flex;align-items:center;justify-content:center;box-sizing:border-box;border-radius:12px;background:color-mix(in srgb,var(--bg) 75%,transparent);border:2px solid color-mix(in srgb,var(--tx) 30%,transparent);color:var(--tx);font-weight:800;font-size:20px;width:56px;height:56px}
+.k.on{background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--bg);border-color:var(--tx)}
+#Z{left:66px;top:6px}#Q{left:6px;top:66px}#S{left:66px;top:66px}#D{left:126px;top:66px}
+#Maj{left:6px;top:132px;width:84px;height:46px;font-size:16px}
+#Ctrl{left:96px;top:132px;width:84px;height:46px;font-size:16px}
+#Esp{left:186px;top:132px;width:140px;height:46px;font-size:16px}
+#up{left:240px;top:6px;font-size:24px}#down{left:240px;top:66px;font-size:24px}
+#sq{width:290px;box-sizing:border-box;background:color-mix(in srgb,var(--bg) 80%,transparent);border:2px solid color-mix(in srgb,var(--tx) 22%,transparent);border-radius:14px;padding:8px;color:var(--tx)}
+#sq .h{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin:0 2px 6px}
+#sq .h b{font-size:13px}#sq .h span{color:color-mix(in srgb,var(--tx) 78%,transparent)}
+.r{display:flex;align-items:center;gap:5px;padding:4px;border-radius:8px;opacity:.5}
+.r.cur{opacity:1;background:color-mix(in srgb,var(--tx) 14%,transparent)}
+.r.done{opacity:.95;outline:1px solid var(--ok)}
+.r.hold{opacity:.9;margin-bottom:4px;border-bottom:1px dashed color-mix(in srgb,var(--tx) 30%,transparent);border-radius:0}
+.c{min-width:28px;height:28px;padding:0 6px;box-sizing:border-box;border-radius:7px;background:color-mix(in srgb,var(--tx) 16%,transparent);border:1px solid color-mix(in srgb,var(--tx) 40%,transparent);color:var(--tx);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.c.on{background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--bg);border-color:var(--tx)}
+.t{color:color-mix(in srgb,var(--tx) 78%,transparent);font-size:11px;margin-left:auto;max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style></head><body>
+<div id="o">
+<div id="cl">
+<div class="k" id="Z">Z</div><div class="k" id="Q">Q</div><div class="k" id="S">S</div><div class="k" id="D">D</div>
+<div class="k" id="Maj">Maj</div><div class="k" id="Ctrl">Ctrl</div><div class="k" id="Esp">Espace</div>
+<div class="k" id="up">▲</div><div class="k" id="down">▼</div>
+</div>
+<div id="sq"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let O={keys:{},wh:{down:{m:'wheel',d:'down'},up:{m:'wheel',d:'up'}},mv:[],codes:[],showKeys:true,showSeq:true};
+let S=null,held=new Set(),wh=null,si=0,rep=0,t0=0,last=0,spl=[],seqKey='',lastSize='';
+
+function holdNeeded(){return S&&S.hold.length&&(rep>0||si>=S.from)}
+function resetSeq(){si=0;rep=0;wh=null;t0=0;last=0;spl=[];renderSeq()}
+function whLabel(w){const x=O.wh&&O.wh[w];if(!x)return w==='down'?'▼':'▲';return x.m==='key'?x.l:(x.d==='down'?'▼':'▲')}
+function actFromWheel(d){const W=O.wh;return W.down.m==='wheel'&&W.down.d===d?'down':(W.up.m==='wheel'&&W.up.d===d?'up':null)}
+function actFromKey(c){const W=O.wh;return W.down.m==='key'&&W.down.c===c?'down':(W.up.m==='key'&&W.up.c===c?'up':null)}
+
+function paintKeys(){
+  Object.keys(O.keys).forEach(n=>{const e=$(n);if(e)e.classList.toggle('on',held.has(O.keys[n].c))});
+  document.querySelectorAll('.c[data-c]').forEach(e=>e.classList.toggle('on',held.has(e.dataset.c)));
+}
+
+function renderSeq(){
+  const P=$('sq');
+  if(!S||!O.showSeq){P.style.display='none';report();return}
+  P.style.display='block';
+  const total=S.reps*S.per;
+  const n=Math.min(total,rep*S.per+Math.floor(si/(S.steps.length/S.per))+1);
+  let h='<div class="h"><b>'+esc(S.name)+'</b><span>'+(total>1?esc(S.label||'Rép.')+' '+n+'/'+total:'')+(last?' · '+Math.round(last/S.per)+' ms':'')+'</span></div>';
+  if(S.hold.length)h+='<div class="r hold">'+S.hold.map(x=>'<div class="c" data-c="'+esc(x.c)+'">'+esc(x.l)+'</div>').join('')+'<span class="t">maintenir'+(S.from?' dès l\'étape '+(S.from+1):'')+'</span></div>';
+  S.steps.forEach((s,i)=>{
+    h+='<div class="r'+(i<si?' done':i===si?' cur':'')+'">'+s.k.map(x=>'<div class="c" data-c="'+esc(x.c)+'">'+esc(x.l)+'</div>').join('')+(s.w?'<div class="c'+(i===si&&wh===s.w?' on':'')+'">🖱 '+esc(whLabel(s.w))+'</div>':'')+'<span class="t">'+esc(s.t||'')+'</span></div>';
+  });
+  P.innerHTML=h;paintKeys();report();
+}
+
+function report(){
+  $('cl').style.display=O.showKeys?'block':'none';
+  const w=$('o').offsetWidth,h=$('o').offsetHeight,k=w+'x'+h;
+  if(k!==lastSize&&w>0){lastSize=k;window.apexOverlay.size(w,h)}
+}
+
+function check(){
+  if(!S)return;const s=S.steps[si];if(!s)return;
+  const need=s.k.map(k=>k.c);
+  if(!need.every(c=>held.has(c)))return;
+  if(s.w&&wh!==s.w)return;
+  if(O.mv.some(c=>held.has(c)&&!need.includes(c)))return;
+  if(holdNeeded()&&!S.hold.every(x=>held.has(x.c)))return;
+  const now=performance.now();
+  if(si===0)t0=now;
+  wh=null;si++;
+  if(si>=S.steps.length){last=Math.round(now-t0);rep++;si=0;spl=[];if(rep>=S.reps){rep=0}}
+  renderSeq();
+}
+
+window.apexOverlay.onOpts(o=>{
+  O=Object.assign(O,o);if(o.colors)Object.keys(o.colors).forEach(k=>document.documentElement.style.setProperty('--'+k,o.colors[k]));
+  Object.keys(O.keys).forEach(n=>{const e=$(n);if(e)e.textContent=O.keys[n].l});
+  $('up').textContent=whLabel('up');$('down').textContent=whLabel('down');
+  $('o').style.transform='scale('+(o.scale||1)+')';
+  $('o').style.opacity=o.opacity==null?.9:o.opacity;
+  S=o.seq||null;
+  const k=JSON.stringify(S);
+  if(k!==seqKey){seqKey=k;si=0;rep=0;wh=null;t0=0;last=0;spl=[]}
+  renderSeq();paintKeys();
+});
+
+const tm={};
+window.apexOverlay.onInput(e=>{
+  if(e.t==='w'){
+    const a=actFromWheel(e.d);
+    const el=$(e.d==='up'?'up':'down');el.classList.add('on');clearTimeout(tm[e.d]);tm[e.d]=setTimeout(()=>el.classList.remove('on'),160);
+    if(a&&S){wh=a;check();renderSeq()}
+    return;
+  }
+  const c=e.c;
+  if(e.t==='kd'){
+    held.add(c);
+    const ka=actFromKey(c);
+    if(S&&(si>0||rep>0)){
+      const s=S.steps[si],nx=S.steps[si+1];
+      const ok=new Set([...(s?s.k:[]),...(nx?nx.k:[]),...S.hold].map(x=>x.c));
+      if(!ok.has(c)&&!ka)resetSeq();
+    }
+    if(ka&&S){wh=ka}
+    paintKeys();check();renderSeq();
+  }else{
+    held.delete(c);
+    if(S&&holdNeeded()&&(si>0||rep>0)&&S.hold.some(x=>x.c===c))resetSeq();
+    paintKeys();check();renderSeq();
+  }
+});
+</script></body></html>

@@ -1,0 +1,49 @@
+ENTRAINEMENT CLAVIER APEX - fabriquer le setup.exe
+==================================================
+
+METHODE 1 - sur ton PC (la plus simple)
+1. Installe Node.js (version LTS) : https://nodejs.org
+2. Double-clique sur build.bat
+3. Attends quelques minutes : le fichier
+   dist\Setup-Entrainement-Clavier-Apex.exe est cree.
+   C'est lui que tu partages.
+
+Pour tester sans installateur : ouvre un terminal dans ce dossier,
+puis "npm install" et "npm start".
+
+METHODE 2 - sans rien installer (GitHub)
+1. Cree un depot GitHub et envoie-y tous les fichiers de ce dossier
+   (y compris le dossier .github).
+2. Onglet "Actions" > "Build setup.exe" > "Run workflow".
+3. Quand c'est fini, telecharge le setup.exe dans "Artifacts".
+
+MODIFIER L'APPLI
+Tout est dans index.html. Pour changer ou ajouter un lurch,
+modifie la liste SEQ dans le script, puis relance build.bat.
+
+A SAVOIR
+- Windows SmartScreen peut afficher "Windows a protege votre PC"
+  car l'installateur n'est pas signe. Clic sur "Informations
+  complementaires" puis "Executer quand meme". Les gens a qui tu
+  le partages verront le meme message.
+- L'appli est un simple entrainement : elle n'envoie aucune touche
+  au jeu et ne s'injecte pas dedans, donc aucun risque avec
+  EasyAntiCheat.
+
+
+OVERLAY DES TOUCHES (stand de tir)
+==================================
+L'overlay lit tes touches en dehors de l'appli. Certains anti-cheats peuvent le refuser :
+verifie les regles du jeu avant de l'utiliser en ligne, a tes risques.
+
+Dans l'appli : engrenage (en haut a droite) > Overlay > "Activer".
+Raccourci : Ctrl + Maj + O.
+Mets le jeu en "fenetre sans bordure".
+
+
+MISES A JOUR
+============
+Les mises a jour automatiques marchent avec le setup.exe construit par GitHub
+(action "Build setup.exe") : cree une release avec un numero plus grand (v1.0.1)
+et les appli installees la telechargent toutes seules. Depot public obligatoire.
+Un build fait a la main avec build.bat n'a pas de mise a jour automatique.

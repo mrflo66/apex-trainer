@@ -35,7 +35,8 @@
     "artifactName": "Setup-Entrainement-Clavier-Apex.${ext}",
     "asarUnpack": [
       "**/*.node"
-    ]
+    ],
+    "npmRebuild": false
   },
   "dependencies": {
     "uiohook-napi": "^1.5.4",

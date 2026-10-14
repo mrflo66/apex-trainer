@@ -30,7 +30,13 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "perMachine": false
+      "perMachine": false,
+      "multiLanguageInstaller": true,
+      "installerLanguages": [
+        "fr_FR",
+        "en_US"
+      ],
+      "displayLanguageSelector": true
     },
     "artifactName": "Setup-Entrainement-Clavier-Apex.${ext}",
     "asarUnpack": [

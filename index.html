@@ -46,6 +46,13 @@ body.hasbg h1,body.hasbg p.s,body.hasbg .row{background:color-mix(in srgb,var(--
 .dev:hover::after,.dev:focus::after{opacity:1}
 @keyframes pls{0%{box-shadow:0 0 0 0 rgba(255,95,174,.55)}70%{box-shadow:0 0 0 10px rgba(255,95,174,0)}100%{box-shadow:0 0 0 0 rgba(255,95,174,0)}}
 .gear.upd::after{content:'';position:absolute;top:2px;right:2px;width:10px;height:10px;border-radius:50%;background:var(--bad)}
+.stage{position:relative}
+.tip{display:none;font-size:.9rem;text-align:center;background:color-mix(in srgb,#f5b301 14%,transparent);border:1px solid #f5b301;border-radius:10px;padding:8px 12px;max-width:600px}
+.bdot{display:none;position:absolute;top:12px;right:14px;width:12px;height:12px;border-radius:50%;background:var(--acc);opacity:.25;transition:transform .08s,opacity .08s}
+.bdot.show{display:block}.bdot.on{opacity:1;transform:scale(1.7)}
+.gico{cursor:pointer;opacity:.35;filter:grayscale(1);font-size:1.1rem;line-height:1.2;user-select:none}
+.gico.on{opacity:1;filter:none}
+.gh{margin-left:6px;font-size:.9rem}
 .rank.closed{padding:6px}
 .rank.closed .rtog{flex-direction:column;padding:10px 4px;margin:0}
 .rank.closed #rbody{display:none}
@@ -82,12 +89,12 @@ body.hasbg h1,body.hasbg p.s,body.hasbg .row{background:color-mix(in srgb,var(--
 <h1><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZjVmYWUiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0ZmMzZjciLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0iaCIgeDE9IjAiIHkxPSIwIiB4Mj0iMSIgeTI9IjEiPjxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzRmYzNmNyIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmNWZhZSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiByeD0iMTEyIiBmaWxsPSIjMTQxMzFmIi8+PGcgZm9udC1mYW1pbHk9IkFyaWFsLEhlbHZldGljYSxzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iODAwIiBmb250LXNpemU9Ijc2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjMTQxMzFmIj48cmVjdCB4PSIxOTAiIHk9IjExNiIgd2lkdGg9IjEzMiIgaGVpZ2h0PSIxMzIiIHJ4PSIyNiIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjI1NiIgeT0iMjA4Ij5aPC90ZXh0PjxyZWN0IHg9IjQyIiB5PSIyNjQiIHdpZHRoPSIxMzIiIGhlaWdodD0iMTMyIiByeD0iMjYiIGZpbGw9InVybCgjaCkiLz48dGV4dCB4PSIxMDgiIHk9IjM1NiI+UTwvdGV4dD48cmVjdCB4PSIxOTAiIHk9IjI2NCIgd2lkdGg9IjEzMiIgaGVpZ2h0PSIxMzIiIHJ4PSIyNiIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjI1NiIgeT0iMzU2Ij5TPC90ZXh0PjxyZWN0IHg9IjMzOCIgeT0iMjY0IiB3aWR0aD0iMTMyIiBoZWlnaHQ9IjEzMiIgcng9IjI2IiBmaWxsPSJ1cmwoI2gpIi8+PHRleHQgeD0iNDA0IiB5PSIzNTYiPkQ8L3RleHQ+PC9nPjwvc3ZnPg==" alt="" width="36" height="36" style="vertical-align:middle;margin-right:10px;border-radius:8px">Entraînement clavier — Apex Legends</h1>
 <p class="s">Travaille tes mouvements : appuie sur toutes les touches demandées en même temps, le plus vite possible.</p>
 <div class="app"><nav class="side" id="tabs"></nav><div class="mainc">
-<div class="stage" id="stage"><div class="keys" id="keys"></div><div class="hint" id="hint">Appuie sur une touche pour commencer</div><div class="live" id="live"></div></div>
+<div class="stage" id="stage"><div class="keys" id="keys"></div><div class="hint" id="hint">Appuie sur une touche pour commencer</div><div class="live" id="live"></div><div class="tip" id="tip"></div><div class="bdot" id="bdot"></div></div>
 <div class="stats">
 <div class="stat"><b id="sAvg">–</b><span>Moyenne (ms)</span></div>
 <div class="stat"><b id="sBest">–</b><span>Meilleur (ms)</span></div>
 <div class="stat"><b id="sStreak">0</b><span>Série</span></div>
-<div class="stat"><b id="sErr">0</b><span>Erreurs</span></div></div>
+<div class="stat"><div class="gico" id="gico" title="Mode fantôme : course contre ton meilleur essai (clique pour activer / désactiver)">👻</div><b id="sErr">0</b><span>Erreurs</span></div></div>
 <div class="pal" id="cpan"></div>
 <div class="row"><button id="reset">Réinitialiser</button><button id="cbtn">➕ Mes mouvements</button><span>Les touches sont lues par position physique : ça marche en AZERTY comme en QWERTY.</span></div>
 </div><aside class="rank closed" id="rank"><button id="rtog" class="rtog" title="Classement"></button><div id="rbody"></div></aside></div>
@@ -150,44 +157,44 @@ SEQ.snake=[...SEQ.rasgd.map(s=>({...s,t:'G→D · '+s.t})),...SEQ.rasdg.map(s=>(
 SEQ.fazzyh=[...SEQ.rasgd.map(s=>({...s,t:'Avant G→D · '+s.t})),...SEQ.rasbdg.map(s=>({...s,t:'Arrière D→G · '+s.t}))];
 SEQ.fazzya=[...SEQ.rasdg.map(s=>({...s,t:'Avant D→G · '+s.t})),...SEQ.rasbgd.map(s=>({...s,t:'Arrière G→D · '+s.t}))];
 let si=0,sT0=0,sAll=0,spl=[],wh=false,rep=0,rT=[],rS=0;
-var sess=[];
-function seqStart(){if(!SEQ[mode]||!started)return;$('live').textContent='';si=0;spl=[];rep=0;rT=[];sAll=performance.now();rS=sAll;sT0=sAll;wh=false;lock=false;$('stage').className='stage';seqRender()}
-function seqRender(){const S=SEQ[mode];$('keys').style.flexDirection='column';$('keys').style.width='100%';$('keys').innerHTML='';const M0=META[mode];if(M0&&M0.hold.length){const h=document.createElement('div');h.className='step cur';h.innerHTML=M0.hold.map(n=>'<div class="key'+(held.has(K[n].c)?' held':'')+'">'+K[n].l+'</div>').join('')+'<small>'+(M0.from?'Maintenir dès l\'étape '+(M0.from+1):'Maintenir tout le long')+'</small>';$('keys').appendChild(h)}
+var sess=[],bl=false,gt0=0,gT=[],gD=[],lw=0;
+function seqStart(){if(!SEQ[mode]||!started)return;$('live').textContent='';si=0;spl=[];rep=0;rT=[];bl=false;gT=[];gD=[];sAll=performance.now();rS=sAll;sT0=sAll;wh=false;lock=false;$('stage').className='stage';seqRender()}
+function seqRender(){const S=SEQ[mode];$('keys').style.flexDirection='column';$('keys').style.width='100%';$('keys').innerHTML='';const M0=META[mode];const gs=GH.data[mode];let gi=-1;if(GH.on&&gs&&!lock){if(si>=1&&gt0){const el=performance.now()-gt0;gi=0;gs.s.forEach(t=>{if(t<=el)gi++});gi=Math.min(gi,S.length-1)}else gi=0}if(M0&&M0.hold.length){const h=document.createElement('div');h.className='step cur';h.innerHTML=M0.hold.map(n=>'<div class="key'+(held.has(K[n].c)?' held':'')+'">'+K[n].l+'</div>').join('')+'<small>'+(M0.from?'Maintenir dès l\'étape '+(M0.from+1):'Maintenir tout le long')+'</small>';$('keys').appendChild(h)}
  S.forEach((s,i)=>{const r=document.createElement('div');r.className='step'+(i<si?' done':(i===si&&!lock)?' cur':'');
-  r.innerHTML=s.k.map(n=>'<div class="key'+(i===si&&held.has(K[n].c)?' held':'')+'">'+K[n].l+'</div>').join('')+(s.w?'<div class="key">'+wlabel(s.w)+'</div>':'')+'<small>'+s.t+(spl[i]!=null?' · '+spl[i]+' ms':'')+'</small>';
+  r.innerHTML=s.k.map(n=>'<div class="key'+(i===si&&held.has(K[n].c)?' held':'')+'">'+K[n].l+'</div>').join('')+(s.w?'<div class="key">'+wlabel(s.w)+'</div>':'')+'<small>'+s.t+(spl[i]!=null?' · '+spl[i]+' ms':'')+(GH.on&&gD[i]!=null?' · <b style="color:'+(gD[i]>0?'var(--bad)':'var(--ok)')+'">'+(gD[i]>0?'+':'')+gD[i]+'</b>':'')+'</small>'+(gi===i?'<span class="gh" title="Fantôme">👻</span>':'');
   $('keys').appendChild(r)});
  if(!lock)$('hint').textContent=M0?M0.label+' '+(rep*M0.per+Math.floor(si/(SEQ[mode].length/M0.per))+1)+'/'+(M0.reps*M0.per)+(M0.hold.length?((M0.from&&rep===0&&si<M0.from)?' · commence sans '+M0.hold.map(n=>K[n].l).join(' + ')+', appuie dessus dès l\'étape '+(M0.from+1):' · garde '+M0.hold.map(n=>K[n].l).join(' + ')+' enfoncés'):''):'Enchaîne les étapes dans l\'ordre (relâche les touches en trop)'}
 function seqCheck(){const S=SEQ[mode],s=S[si];if(!s||lock)return;
  const need=s.k.map(n=>K[n].c);
  if(!need.every(c=>held.has(c)))return;
- const M=META[mode];if(needHold(M)&&!M.hold.every(n=>held.has(K[n].c)))return;
+ const M=META[mode];if(needHold(M)&&!M.hold.every(n=>held.has(K[n].c))){if(!bl&&(!s.w||wh===s.w)){bl=true;const ix=si;setTimeout(()=>{if(!lock&&si===ix&&META[mode]&&!META[mode].hold.every(n=>held.has(K[n].c)))tipAdd('holdmiss',ix)},500)}return}
  if(s.w&&wh!==s.w)return;
- if([K.Z.c,K.Q.c,K.S.c,K.D.c].some(c=>held.has(c)&&!need.includes(c)))return;
- const now=performance.now();spl[si]=Math.round(now-sT0);sT0=now;wh=false;si++;
- if(si>=S.length){const dt=now-sAll;
- if(M){rT.push(dt);rep++;streak++;sess.push(dt);if(sess.length>300)sess.shift();stats();const av=Math.round(sess.reduce((a,b)=>a+b,0)/sess.length);$('live').textContent='✔ Dernier : '+Math.round(dt)+' ms · moyenne '+av+' ms · meilleur '+Math.round(Math.min(...sess))+' ms';if(rep<M.reps){si=0;spl=[];sAll=now;sT0=now;wh=false;seqRender();return}}
+ const ex=[K.Z.c,K.Q.c,K.S.c,K.D.c].filter(c=>held.has(c)&&!need.includes(c));if(ex.length){if(s.w&&wh===s.w&&!bl){bl=true;tipAdd('blocked',si,ex.map(kname).join(' + '))}return}
+ const now=performance.now();spl[si]=Math.round(now-sT0);sT0=now;wh=false;bl=false;if(si===0){gt0=now;gT=[0];gD=[]}else{gT[si]=Math.round(now-gt0);const g0=GH.data[mode];if(g0&&g0.s[si]!=null)gD[si]=gT[si]-g0.s[si]}si++;
+ if(si>=S.length){const dt=now-sAll;const gOld=GH.data[mode],gTot=gT[S.length-1],gDelta=(gOld&&gTot!=null)?gTot-gOld.total:null;if(gTot>0&&(!gOld||gTot<gOld.total)){GH.data[mode]={s:gT.slice(),total:gTot};ghSave()}
+ if(M){rT.push(dt);rep++;streak++;sess.push(dt);if(sess.length>300)sess.shift();stats();const av=Math.round(sess.reduce((a,b)=>a+b,0)/sess.length);$('live').textContent='✔ Dernier : '+Math.round(dt)+' ms · moyenne '+av+' ms · meilleur '+Math.round(Math.min(...sess))+' ms'+(GH.on&&gDelta!=null?' · 👻 '+(gDelta>0?'+':'')+gDelta+' ms':'');if(rep<M.reps){si=0;spl=[];sAll=now;sT0=now;wh=false;bl=false;gT=[];gD=[];seqRender();return}}
  const tot=M?now-rS:dt;if(M)rec(mode,tot/(M.reps*M.per));times.push(tot);if(times.length>50)times.shift();if(!M)streak++;lock=true;flash('ok');stats();seqRender();
  $('hint').textContent=M?('Série de '+(M.reps*M.per)+' terminée : '+Math.round(tot)+' ms au total · '+Math.round(tot/(M.reps*M.per))+' ms / '+M.label.toLowerCase()):('Total : '+Math.round(dt)+' ms');
  setTimeout(seqStart,M?3000:1500);return}
  seqRender()}
-function seqRelease(code){const M=META[mode];if(M&&!lock&&(rep>0||si>0)&&needHold(M)&&M.hold.some(n=>K[n].c===code)){errs++;streak=0;stats();seqStart();flash('bad');setTimeout(()=>{if(!lock)flash('')},180)}}
+function seqRelease(code){const M=META[mode];if(M&&!lock&&(rep>0||si>0)&&needHold(M)&&M.hold.some(n=>K[n].c===code)){tipAdd('hold',si);errs++;streak=0;stats();seqStart();flash('bad');setTimeout(()=>{if(!lock)flash('')},180)}}
 function seqKey(e){held.add(e.code);if(lock)return;const S=SEQ[mode];const M1=META[mode];
  const ok=new Set([...S[si].k,...(S[si+1]?S[si+1].k:[]),...(M1?M1.hold:[])].map(n=>K[n].c));
- if(!ok.has(e.code)){errs++;streak=0;stats();seqStart();flash('bad');setTimeout(()=>{if(!lock)flash('')},180);return}
+ if(!ok.has(e.code)){tipAdd('wrong',si,kname(e.code));errs++;streak=0;stats();seqStart();flash('bad');setTimeout(()=>{if(!lock)flash('')},180);return}
  seqRender();seqCheck()}
-addEventListener('wheel',e=>{if(SEQ[mode]&&started&&!(e.target.closest&&e.target.closest('.pal,.modal'))){e.preventDefault();if(!lock){const dir=e.deltaY>0?'down':'up';const a=WH.down.m==='wheel'&&WH.down.d===dir?'down':(WH.up.m==='wheel'&&WH.up.d===dir?'up':null);if(a){wh=a;seqCheck()}}}},{passive:false});
+addEventListener('wheel',e=>{if(SEQ[mode]&&started&&!(e.target.closest&&e.target.closest('.pal,.modal'))){e.preventDefault();if(!lock){const dir=e.deltaY>0?'down':'up';const a=WH.down.m==='wheel'&&WH.down.d===dir?'down':(WH.up.m==='wheel'&&WH.up.d===dir?'up':null);if(a){const sx=SEQ[mode][si];if(sx&&sx.w&&a!==sx.w&&Date.now()-lw>800&&sx.k.every(n=>held.has(K[n].c))){lw=Date.now();tipAdd('wheel',si)}wh=a;seqCheck()}}}},{passive:false});
 function stats(){const X=(META[mode]&&sess.length)?sess:times;$('sAvg').textContent=X.length?Math.round(X.reduce((x,y)=>x+y,0)/X.length):'–';$('sBest').textContent=X.length?Math.round(Math.min(...X)):'–';$('sStreak').textContent=streak;$('sErr').textContent=errs}
 function flash(c){$('stage').className='stage '+c}
-function reset(keep){times=[];sess=[];streak=0;errs=0;started=false;stats();if($('live'))$('live').textContent='';ovSend();target=[];$('keys').innerHTML='';$('hint').textContent='Appuie sur une touche pour commencer';$('stage').className='stage'}
+function reset(keep){times=[];sess=[];streak=0;errs=0;started=false;metSync();tipReset();gT=[];gD=[];gt0=0;stats();if($('live'))$('live').textContent='';ovSend();target=[];$('keys').innerHTML='';$('hint').textContent='Appuie sur une touche pour commencer';$('stage').className='stage'}
 $('reset').onclick=()=>reset();
 let codes=new Set(Object.values(K).map(k=>k.c));
 addEventListener('keydown',e=>{
  if(/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)||$('gset').classList.contains('open'))return;if(!e.repeat&&SEQ[mode]&&started&&!lock){const a=wheelKeyAct(e.code);if(a){e.preventDefault();wh=a;seqCheck();return}}if(!codes.has(e.code))return;e.preventDefault();if(e.repeat)return;
- if(!started){started=true;next();if(SEQ[mode]){held.add(e.code);seqRender();seqCheck()}return}
+ if(!started){started=true;next();metSync();if(SEQ[mode]){held.add(e.code);seqRender();seqCheck()}return}
  if(SEQ[mode]){seqKey(e);return}
  if(lock)return;
  const need=target.map(n=>K[n].c);
- if(!need.includes(e.code)){errs++;streak=0;flash('bad');held.clear();stats();setTimeout(()=>{if(!lock)flash('')},180);render();return}
+ if(!need.includes(e.code)){simpleTip(need,e.code);errs++;streak=0;flash('bad');held.clear();stats();setTimeout(()=>{if(!lock)flash('')},180);render();return}
  held.add(e.code);render();
  if(need.every(c=>held.has(c))){const dt=performance.now()-t0;times.push(dt);if(times.length>50)times.shift();streak++;lock=true;flash('ok');$('hint').textContent=Math.round(dt)+' ms';stats();setTimeout(next,380)}
 });
@@ -233,10 +240,11 @@ function cusUnregister(c){const id='c_'+c.id;delete MODES[id];delete SEQ[id];del
 let ed=null;
 const newEd=()=>({id:null,name:'',reps:20,hm:false,hc:false,from:1,steps:[{k:[],w:''}]});
 function cusPanel(){const P=$('cpan');ed=ed||newEd();
- P.innerHTML='<div id="cList"></div><h4>'+(ed.id?'Modifier le mouvement':'Nouveau mouvement')+'</h4><div class="cols"><label>Nom<input id="cName" type="text" maxlength="30"></label><label>Répétitions<input id="cReps" type="number" min="1" max="500"></label></div><div class="crow">Maintenir en continu : <label><input type="checkbox" id="cHM"> Maj</label><label><input type="checkbox" id="cHC"> Ctrl</label><label>dès l\'étape <input id="cFrom" type="number" min="1" max="30" style="width:64px"></label></div><div id="cSteps"></div><div class="crow"><button id="cAdd">+ Étape</button><button id="cSave" class="on">Enregistrer</button><button id="cNew">Nouveau</button><span id="cMsg"></span></div>';
+ P.innerHTML='<div id="cList"></div><h4>'+(ed.id?'Modifier le mouvement':'Nouveau mouvement')+'</h4><div class="cols"><label>Nom<input id="cName" type="text" maxlength="30"></label><label>Répétitions<input id="cReps" type="number" min="1" max="500"></label></div><div class="crow">Maintenir en continu : <label><input type="checkbox" id="cHM"> Maj</label><label><input type="checkbox" id="cHC"> Ctrl</label><label>dès l\'étape <input id="cFrom" type="number" min="1" max="30" style="width:64px"></label></div><div id="cSteps"></div><div class="crow"><button id="cAdd">+ Étape</button><button id="cSave" class="on">Enregistrer</button><button id="cNew">Nouveau</button><span id="cMsg"></span></div>'+shareHtml();
  $('cName').value=ed.name;$('cReps').value=ed.reps;$('cHM').checked=ed.hm;$('cHC').checked=ed.hc;$('cFrom').value=ed.from;
  $('cAdd').onclick=()=>{ed.steps.push({k:[],w:''});cusSteps()};
  $('cNew').onclick=()=>{ed=null;cusPanel()};
+ shareBind();
  $('cSave').onclick=()=>{const msg=t=>{$('cMsg').textContent=t};
   ed.name=$('cName').value.trim();ed.reps=Math.max(1,Math.min(500,+$('cReps').value||1));ed.hm=$('cHM').checked;ed.hc=$('cHC').checked;ed.from=Math.max(1,Math.min(ed.steps.length,+$('cFrom').value||1));
   if(!ed.name)return msg('Donne un nom au mouvement.');
@@ -247,9 +255,10 @@ function cusPanel(){const P=$('cpan');ed=ed||newEd();
  cusList();cusSteps()}
 function cusList(){const L=$('cList');
  if(!CUS.length){L.innerHTML='<div class="crow" style="color:var(--mut)">Aucun mouvement perso pour l\'instant.</div>';return}
- L.innerHTML=CUS.map(c=>'<div class="crow"><b>'+esc(c.name)+'</b><span style="color:var(--mut)">×'+c.reps+' · '+c.steps.length+' étapes</span><button data-e="'+c.id+'">Modifier</button><button data-d="'+c.id+'">Supprimer</button></div>').join('');
+ L.innerHTML=CUS.map(c=>'<div class="crow"><b>'+esc(c.name)+'</b><span style="color:var(--mut)">×'+c.reps+' · '+c.steps.length+' étapes</span><button data-e="'+c.id+'">Modifier</button><button data-xp="'+c.id+'">Exporter</button><button data-d="'+c.id+'">Supprimer</button></div>').join('');
  L.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{const c=CUS.find(x=>x.id===b.dataset.e);ed={id:c.id,name:c.name,reps:c.reps,hm:c.hold.includes('Maj'),hc:c.hold.includes('Ctrl'),from:c.from+1,steps:c.steps.map(s=>({k:[...s.k],w:s.w||''}))};cusPanel()});
- L.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const c=CUS.find(x=>x.id===b.dataset.d);cusUnregister(c);CUS=CUS.filter(x=>x!==c);cusSave();tabs();cusList()})}
+ L.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{const c=CUS.find(x=>x.id===b.dataset.d);cusUnregister(c);CUS=CUS.filter(x=>x!==c);cusSave();tabs();cusList()});
+ L.querySelectorAll('[data-xp]').forEach(b=>b.onclick=()=>shareOut([CUS.find(x=>x.id===b.dataset.xp)]))}
 function cusSteps(){const el=$('cSteps');
  el.innerHTML=ed.steps.map((s,i)=>'<div class="crow"><b>'+(i+1)+'.</b>'+CHIPS.map(n=>'<button class="chip'+(s.k.includes(n)?' on':'')+'" data-i="'+i+'" data-k="'+n+'">'+K[n].l+'</button>').join('')+'<select data-w="'+i+'"><option value="">sans molette</option><option value="down"'+(s.w==='down'?' selected':'')+'>molette ↓ (saut)</option><option value="up"'+(s.w==='up'?' selected':'')+'>molette ↑</option></select><button data-x="'+i+'">✕</button></div>').join('');
  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{const s=ed.steps[+b.dataset.i],k=b.dataset.k;s.k=s.k.includes(k)?s.k.filter(x=>x!==k):[...s.k,k];b.classList.toggle('on')});
@@ -261,9 +270,11 @@ const KDESC={Z:'Avancer',Q:'Gauche',S:'Reculer',D:'Droite',Maj:'Sprint',Ctrl:'Ac
 var autoSprint=false,LAYOUT='auto',layAuto=/^fr/i.test(navigator.language)?'azerty':'qwerty';
 const LBL={azerty:{Z:'Z',Q:'Q',S:'S',D:'D',Maj:'Maj',Ctrl:'Ctrl',Esp:'Espace',C:'C',R:'R',E:'E'},qwerty:{Z:'W',Q:'A',S:'S',D:'D',Maj:'Shift',Ctrl:'Ctrl',Esp:'Space',C:'C',R:'R',E:'E'}};
 function curLay(){return LAYOUT==='auto'?layAuto:LAYOUT}
+var lmap={};
+function staticLmap(){const m={};'abcdefghijklmnopqrstuvwxyz'.split('').forEach(c=>{m[c]='Key'+c.toUpperCase()});if(curLay()==='azerty'){m.a='KeyQ';m.q='KeyA';m.z='KeyW';m.w='KeyZ';m.m='Semicolon'}return m}
 function applyLayout(){const L=LBL[curLay()];Object.keys(K).forEach(n=>{if(KDEF[n]&&K[n].c===KDEF[n].c&&L[n])K[n].l=L[n]})}
 function refreshLabels(){tabs();if($('gset').classList.contains('open'))gRender();if(SEQ[mode]&&started)seqRender();else if(target.length)render();ovSend()}
-function detectLayout(){try{if(navigator.keyboard&&navigator.keyboard.getLayoutMap){navigator.keyboard.getLayoutMap().then(m=>{layAuto=m.get('KeyW')==='z'?'azerty':'qwerty';if(LAYOUT==='auto'){applyLayout();refreshLabels()}}).catch(()=>{})}}catch(e){}}
+function detectLayout(){try{if(navigator.keyboard&&navigator.keyboard.getLayoutMap){navigator.keyboard.getLayoutMap().then(m=>{layAuto=m.get('KeyW')==='z'?'azerty':'qwerty';const lm={};m.forEach((v,k)=>{if(/^Key[A-Z]$/.test(k)&&/^[a-zA-Z]$/.test(v))lm[v.toLowerCase()]=k});if(Object.keys(lm).length>20)lmap=lm;if(LAYOUT==='auto'){applyLayout();refreshLabels()}else ovSend()}).catch(()=>{})}}catch(e){}}
 function applyAuto(){Object.keys(META).forEach(k=>{const m=META[k];if(!m.h0)m.h0=[...m.hold];m.hold=autoSprint?m.h0.filter(n=>n!=='Maj'):[...m.h0]})}
 const KDEF=JSON.parse(JSON.stringify(K));
 const WH={down:{m:'wheel',d:'down'},up:{m:'wheel',d:'up'}};
@@ -282,17 +293,17 @@ function gRender(){const B=$('gset');
  +Object.keys(KDESC).map(n=>'<div class="krow"><span class="d">'+KDESC[n]+'</span><div class="key">'+esc(K[n].l)+'</div><button data-k="'+n+'">'+(cap&&cap.n===n?'Appuie…':'Changer')+'</button></div>').join('')
  +'<div class="krow"><label style="display:flex;gap:8px;align-items:center;flex:1;cursor:pointer"><input type="checkbox" id="gauto"'+(autoSprint?' checked':'')+'> Course automatique (plus besoin de maintenir Maj)</label></div><h3 style="margin:14px 0 4px">Molette</h3>'
  +['down','up'].map(w=>'<div class="krow"><span class="d">'+(w==='down'?'Action « molette ↓ » (saut)':'Action « molette ↑ » (scroll)')+'</span><select data-w="'+w+'"><option value="wheel-down"'+(WH[w].m==='wheel'&&WH[w].d==='down'?' selected':'')+'>Molette ↓</option><option value="wheel-up"'+(WH[w].m==='wheel'&&WH[w].d==='up'?' selected':'')+'>Molette ↑</option><option value="key"'+(WH[w].m==='key'?' selected':'')+'>Une touche</option></select>'+(WH[w].m==='key'?'<div class="key">'+esc(WH[w].l)+'</div><button data-wk="'+w+'">'+(cap&&cap.n==='wk'+w?'Appuie…':'Changer')+'</button>':'')+'</div>').join('')
- +'<div class="crow"><button id="gres">Réinitialiser les touches</button></div>'+updHtml()+ovHtml()+'<h3 style="margin:16px 0 4px">🎨 Couleurs et fond</h3><div id="pal" class="pal show"></div></div>';
+ +'<div class="crow"><button id="gres">Réinitialiser les touches</button></div>'+metHtml()+updHtml()+ovHtml()+'<h3 style="margin:16px 0 4px">🎨 Couleurs et fond</h3><div id="pal" class="pal show"></div></div>';
  $('gx').onclick=()=>B.classList.remove('open');
  $('glay').onchange=e=>{LAYOUT=e.target.value;applyLayout();inSave();refreshLabels()};
  $('gauto').onchange=e=>{autoSprint=e.target.checked;applyAuto();inSave();reset(true)};
  B.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const n=b.dataset.k;const f=ev=>{const old=K[n].c,oldl=K[n].l;const o=Object.keys(K).find(m=>m!==n&&K[m].c===ev.code);if(o){K[o].c=old;K[o].l=oldl}K[n].c=ev.code;K[n].l=keyLabel(ev);rebuildCodes();inSave()};f.n=n;cap=f;gRender()});
- B.querySelectorAll('select').forEach(sl=>sl.onchange=()=>{const w=sl.dataset.w,o=w==='down'?'up':'down',v=sl.value;
+ B.querySelectorAll('select[data-w]').forEach(sl=>sl.onchange=()=>{const w=sl.dataset.w,o=w==='down'?'up':'down',v=sl.value;
   if(v==='key'){WH[w]={m:'key',c:'',l:'?'};const f=ev=>{WH[w]={m:'key',c:ev.code,l:keyLabel(ev)};rebuildCodes();inSave()};f.n='wk'+w;cap=f}
   else{const d=v==='wheel-down'?'down':'up';WH[w]={m:'wheel',d:d};if(WH[o].m==='wheel'&&WH[o].d===d)WH[o]={m:'wheel',d:d==='down'?'up':'down'}}
   rebuildCodes();inSave();gRender()});
  B.querySelectorAll('[data-wk]').forEach(b=>b.onclick=()=>{const w=b.dataset.wk;const f=ev=>{WH[w]={m:'key',c:ev.code,l:keyLabel(ev)};rebuildCodes();inSave()};f.n='wk'+w;cap=f;gRender()});
- renderPal();ovBind();updBind();
+ renderPal();ovBind();updBind();metBind();
  $('gres').onclick=()=>{autoSprint=false;applyAuto();Object.keys(KDEF).forEach(n=>{K[n].c=KDEF[n].c;K[n].l=KDEF[n].l});applyLayout();WH.down={...WDEF.down};WH.up={...WDEF.up};rebuildCodes();inSave();gRender()}}
 $('gear').onclick=()=>{$('gset').classList.add('open');gRender()};
 $('gset').onclick=e=>{if(e.target===$('gset'))$('gset').classList.remove('open')};
@@ -333,18 +344,18 @@ var rOpen=false;try{rOpen=localStorage.getItem('apexRankOpen')==='1'}catch(e){}
 function rankLayout(){const a=$('rank');a.classList.toggle('closed',!rOpen);a.parentElement.classList.toggle('rc',!rOpen)}
 $('rtog').onclick=()=>{rOpen=!rOpen;try{localStorage.setItem('apexRankOpen',rOpen?'1':'0')}catch(e){}rankLayout();rankRender()};
 rankLayout();rankRender();
-var ovOn=false,ovMsg='';
+var ovOn=false,ovMsg='',ovMoving=false;
 var OVDEF={a1:'#ff5fae',a2:'#4fc3f7',bg:'#14131f',tx:'#ffffff',ok:'#35d07f'};
 var OVC=[['a1','Touche active (début)'],['a2','Touche active (fin)'],['bg','Fond'],['tx','Texte'],['ok','Étape réussie']];
-var ovS={ack:false,scale:1,opacity:.9,pos:'br',inv:false,showKeys:true,showSeq:true,colors:Object.assign({},OVDEF)};
+var ovS={ack:false,scale:1,opacity:.9,pos:'br',inv:false,showKeys:true,showSeq:true,colors:Object.assign({},OVDEF),x:null,y:null};
 try{Object.assign(ovS,JSON.parse(localStorage.getItem('apexOv')||'{}'))}catch(e){}
 ovS.colors=Object.assign({},OVDEF,ovS.colors||{});
 function ovSave(){try{localStorage.setItem('apexOv',JSON.stringify(ovS))}catch(e){}}
 function ovKeys(){const o={};['Z','Q','S','D','Maj','Ctrl','Esp'].forEach(n=>{o[n]={c:K[n].c,l:K[n].l}});return o}
 function ovSeq(){const S=SEQ[mode];if(!S)return null;const M=META[mode]||{};
  return{name:(MODES[mode]&&MODES[mode].n)||'',steps:S.map(s=>({k:s.k.map(n=>({c:K[n].c,l:K[n].l})),w:s.w||'',t:s.t||''})),hold:(M.hold||[]).map(n=>({c:K[n].c,l:K[n].l})),from:M.from||0,reps:M.reps||1,per:M.per||1,label:M.label||''}}
-function ovCodes(){const a=new Set();Object.keys(K).forEach(n=>a.add(K[n].c));['down','up'].forEach(w=>{if(WH[w].m==='key')a.add(WH[w].c)});return[...a]}
-function ovPayload(){return{keys:ovKeys(),scale:ovS.scale,opacity:ovS.opacity,pos:ovS.pos,inv:ovS.inv,ack:ovS.ack,seq:ovSeq(),wh:{down:WH.down,up:WH.up},mv:[K.Z.c,K.Q.c,K.S.c,K.D.c],codes:ovCodes(),showKeys:ovS.showKeys,showSeq:ovS.showSeq,colors:ovS.colors}}
+function ovCodes(){const a=new Set();Object.keys(KDESC).forEach(n=>a.add(K[n].c));['down','up'].forEach(w=>{if(WH[w].m==='key')a.add(WH[w].c)});return[...a]}
+function ovPayload(){return{keys:ovKeys(),scale:ovS.scale,opacity:ovS.opacity,pos:ovS.pos,inv:ovS.inv,ack:ovS.ack,seq:ovSeq(),wh:{down:WH.down,up:WH.up},mv:[K.Z.c,K.Q.c,K.S.c,K.D.c],codes:ovCodes(),showKeys:ovS.showKeys,showSeq:ovS.showSeq,colors:ovS.colors,lmap:Object.keys(lmap).length?lmap:staticLmap(),x:ovS.x,y:ovS.y}}
 function ovSend(){if(window.apexOverlay&&ovOn)apexOverlay.opts(ovPayload())}
 function ovHtml(){
  const T='<h3 style="margin:16px 0 4px">🖥 Overlay (stand de tir)</h3>';
@@ -353,8 +364,9 @@ function ovHtml(){
  +'<div class="rsub" style="text-align:left;margin:6px 0">L\'overlay lit tes touches en dehors de l\'appli. Certains anti-cheats peuvent le refuser : vérifie les règles du jeu avant de l\'utiliser en ligne, à tes risques.</div>'
  
  +'<div class="crow"><button id="ovBtn">'+(ovOn?'Désactiver l\'overlay':'Activer l\'overlay')+'</button><span style="color:var(--bad)">'+esc(ovMsg)+'</span></div>'
+ +'<div class="crow"><button id="ovMove"'+(ovOn?'':' disabled')+'>'+(ovMoving?'✔ Terminer le déplacement':'↔ Déplacer l\'overlay à la souris')+'</button><span class="rsub">ou Ctrl + Maj + M</span></div>'
  +'<div class="crow"><label>Taille <input type="range" id="ovSc" min="0.6" max="2" step="0.1" value="'+ovS.scale+'"></label><label>Opacité <input type="range" id="ovOp" min="0.2" max="1" step="0.05" value="'+ovS.opacity+'"></label></div>'
- +'<div class="crow"><label>Position <select id="ovPos">'+[['tl','Haut gauche'],['tr','Haut droite'],['bl','Bas gauche'],['br','Bas droite'],['bc','Bas centre']].map(v=>'<option value="'+v[0]+'"'+(ovS.pos===v[0]?' selected':'')+'>'+v[1]+'</option>').join('')+'</select></label><label><input type="checkbox" id="ovInv"'+(ovS.inv?' checked':'')+'> Inverser le sens de la molette</label></div>'
+ +'<div class="crow"><label>Position <select id="ovPos">'+[['tl','Haut gauche'],['tr','Haut droite'],['bl','Bas gauche'],['br','Bas droite'],['bc','Bas centre']].concat(ovS.pos==='custom'?[['custom','Personnalisée (déplacée)']]:[]).map(v=>'<option value="'+v[0]+'"'+(ovS.pos===v[0]?' selected':'')+'>'+v[1]+'</option>').join('')+'</select></label><label><input type="checkbox" id="ovInv"'+(ovS.inv?' checked':'')+'> Inverser le sens de la molette</label></div>'
  +'<div class="crow"><label>Contenu <select id="ovMode"><option value="both"'+(ovS.showKeys&&ovS.showSeq?' selected':'')+'>Clavier + mouvement</option><option value="keys"'+(ovS.showKeys&&!ovS.showSeq?' selected':'')+'>Clavier seul (ZQSD…)</option><option value="seq"'+(!ovS.showKeys&&ovS.showSeq?' selected':'')+'>Mouvement seul</option></select></label></div>'
  +'<div class="crow">'+OVC.map(x=>'<label>'+x[1]+' <input type="color" id="ovc_'+x[0]+'" value="'+ovS.colors[x[0]]+'" style="width:42px;height:30px;padding:0;border:0;background:none"></label>').join('')+'<button id="ovcr">Couleurs par défaut</button></div>'
  +'<div class="rsub" style="text-align:left">Mets le jeu en « fenêtré sans bordure » (pas en plein écran exclusif). Raccourci : Ctrl + Maj + O. Aucune touche n\'est enregistrée ni envoyée : elles servent seulement à l\'affichage.</div>'}
@@ -364,11 +376,12 @@ function ovBind(){if(!window.apexOverlay)return;
  $('ovSc').oninput=e=>{ovS.scale=+e.target.value;ovSend()};$('ovSc').onchange=ovSave;
  $('ovOp').oninput=e=>{ovS.opacity=+e.target.value;ovSend()};$('ovOp').onchange=ovSave;
  $('ovPos').onchange=e=>{ovS.pos=e.target.value;ovSave();ovSend()};
+ $('ovMove').onclick=()=>apexOverlay.move(!ovMoving);
  $('ovInv').onchange=e=>{ovS.inv=e.target.checked;ovSave();ovSend()};
  $('ovMode').onchange=e=>{const v=e.target.value;ovS.showKeys=v!=='seq';ovS.showSeq=v!=='keys';ovSave();ovSend()};
  OVC.forEach(x=>{$('ovc_'+x[0]).oninput=e=>{ovS.colors[x[0]]=e.target.value;ovSend()};$('ovc_'+x[0]).onchange=ovSave});
  $('ovcr').onclick=()=>{ovS.colors=Object.assign({},OVDEF);ovSave();ovSend();gRender()}}
-if(window.apexOverlay){apexOverlay.state().then(s=>{ovOn=s.on}).catch(()=>{});apexOverlay.onState(s=>{ovOn=s.on;if(s.err)ovMsg=s.err;if($('gset').classList.contains('open'))gRender()})}
+if(window.apexOverlay){apexOverlay.state().then(s=>{ovOn=s.on;ovMoving=!!s.moving}).catch(()=>{});apexOverlay.onMoved(p=>{ovS.pos='custom';ovS.x=p.x;ovS.y=p.y;ovSave();if($('gset').classList.contains('open'))gRender()});apexOverlay.onState(s=>{ovOn=s.on;ovMoving=!!s.moving;if(s.err)ovMsg=s.err;if($('gset').classList.contains('open'))gRender()})}
 var updS={s:'idle',version:''};
 function updHtml(){
  const T='<h3 style="margin:16px 0 4px">🔄 Mises à jour</h3>';
@@ -378,6 +391,99 @@ function updHtml(){
 function updBind(){if(!window.apexUpdate)return;$('updChk').onclick=()=>apexUpdate.check();const b=$('updInst');if(b)b.onclick=()=>apexUpdate.install()}
 function updBadge(){$('gear').classList.toggle('upd',updS.s==='downloaded'||updS.s==='available'||updS.s==='progress')}
 if(window.apexUpdate){apexUpdate.state().then(s=>{updS=Object.assign(updS,s);updBadge()}).catch(()=>{});apexUpdate.onState(s=>{updS=Object.assign(updS,s);updBadge();if($('gset').classList.contains('open'))gRender()})}
+/* ===== Conseils personnalisés, métronome, mode fantôme ===== */
+var FAIL={};try{FAIL=JSON.parse(localStorage.getItem('apexFails')||'{}')||{}}catch(e){FAIL={}}
+function failSave(){try{localStorage.setItem('apexFails',JSON.stringify(FAIL))}catch(e){}}
+function kname(c){const n=Object.keys(K).find(n=>K[n].c===c);return n?K[n].l:String(c).replace(/^Key|^Digit/,'')}
+function lbls(names){return names.map(n=>K[n].l).join(' + ')}
+function wtxt(w){const x=WH[w];return x.m==='key'?x.l:'la molette '+(x.d==='down'?'vers le bas ↓':'vers le haut ↑')}
+function weakLine(){const S=SEQ[mode],F=FAIL[mode];if(!S||!F)return '';let bi=-1,bc=0;Object.keys(F).forEach(i=>{if(F[i]>bc){bc=F[i];bi=+i}});if(bc<3||!S[bi])return '';return 'Point faible : étape '+(bi+1)+' ('+lbls(S[bi].k)+(S[bi].w?' + '+wtxt(S[bi].w):'')+') — '+bc+' erreurs.'}
+function tipShow(msg,extra){const t=$('tip');t.style.display='block';t.innerHTML='💡 '+esc(msg)+(extra?'<br><small style="color:var(--mut)">'+esc(extra)+'</small>':'')}
+function tipReset(){const w=weakLine();if(w)tipShow(w);else $('tip').style.display='none'}
+function tipAdd(kind,idx,extra){
+ const S=SEQ[mode];if(!S||!S[idx])return;const s=S[idx],M=META[mode]||{hold:[]};
+ const keys=lbls(s.k)+(s.w?(s.k.length?' + ':'')+wtxt(s.w):'');
+ const over=/overlap/i.test(s.t||'');let msg='';
+ if(kind==='wrong')msg=over?'Fais attention : tu dois maintenir '+lbls(s.k)+' en même temps pour l\'overlap (étape '+(idx+1)+').':'Étape '+(idx+1)+' : tu dois maintenir '+keys+'. Tu as appuyé sur '+extra+', qui n\'est pas attendu ici.';
+ else if(kind==='hold')msg='Garde '+lbls(M.hold)+' enfoncé'+(M.hold.length>1?'s':'')+' jusqu\'à la fin de la série : tu l\'as relâché à l\'étape '+(idx+1)+'.';
+ else if(kind==='holdmiss')msg='N\'oublie pas de maintenir '+lbls(M.hold)+' dès l\'étape '+((M.from||0)+1)+'.';
+ else if(kind==='blocked')msg='Relâche '+extra+' avant de continuer : à l\'étape '+(idx+1)+', seulement '+lbls(s.k)+' doit être enfoncé.';
+ else if(kind==='wheel')msg='Étape '+(idx+1)+' : utilise '+wtxt(s.w)+' ici.';
+ FAIL[mode]=FAIL[mode]||{};FAIL[mode][idx]=(FAIL[mode][idx]||0)+1;failSave();
+ tipShow(msg,weakLine());
+}
+function simpleTip(need,code){tipShow('Pour cet exercice, appuie sur '+need.map(kname).join(' + ')+(need.length>1?' en même temps':'')+'. Tu as appuyé sur '+kname(code)+'.')}
+
+/* ---- Métronome (désactivable) ---- */
+var MET={on:false,bpm:90,vol:.5,vis:true};try{Object.assign(MET,JSON.parse(localStorage.getItem('apexMetro')||'{}'))}catch(e){}
+var metAC=null,metT=null,metNext=0,metBeat=0;
+function metSave(){try{localStorage.setItem('apexMetro',JSON.stringify(MET))}catch(e){}}
+function metUi(){const d=$('bdot');if(d)d.classList.toggle('show',MET.on&&MET.vis)}
+function metClick(){
+ if(MET.vol>0){try{metAC=metAC||new(window.AudioContext||window.webkitAudioContext)();if(metAC.state==='suspended')metAC.resume();
+  const o=metAC.createOscillator(),g=metAC.createGain(),t=metAC.currentTime;o.frequency.value=metBeat%4===0?1200:800;
+  g.gain.setValueAtTime(MET.vol*.5,t);g.gain.exponentialRampToValueAtTime(.0001,t+.06);o.connect(g);g.connect(metAC.destination);o.start(t);o.stop(t+.07)}catch(e){}}
+ metBeat++;if(MET.vis){const d=$('bdot');if(d){d.classList.add('on');setTimeout(()=>d.classList.remove('on'),90)}}
+}
+function metLoop(){metClick();metNext+=60000/MET.bpm;metT=setTimeout(metLoop,Math.max(0,metNext-performance.now()))}
+function metSync(){const want=MET.on&&started;if(want&&!metT){metBeat=0;metNext=performance.now();metLoop()}else if(!want&&metT){clearTimeout(metT);metT=null}}
+
+/* ---- Mode fantôme ---- */
+var GH={on:false,data:{}};try{const g=JSON.parse(localStorage.getItem('apexGhost')||'null');if(g){GH.on=!!g.on;GH.data=g.data||{}}}catch(e){}
+function ghSave(){try{localStorage.setItem('apexGhost',JSON.stringify(GH))}catch(e){}}
+function ghUi(){const g=$('gico');if(g)g.classList.toggle('on',GH.on)}
+function ghToggle(v){GH.on=v;ghSave();ghUi();if(SEQ[mode]&&started)seqRender()}
+setInterval(()=>{if(GH.on&&started&&!lock&&SEQ[mode]&&si>=1)seqRender()},120);
+
+/* ---- Réglages ---- */
+function metHtml(){return '<h3 style="margin:16px 0 4px">🎯 Aides à l\'entraînement</h3>'
+ +'<label class="crow" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="metOn"'+(MET.on?' checked':'')+'> 🎵 Métronome (tu peux le désactiver)</label>'
+ +'<div class="crow"><label>Tempo <input type="range" id="metBpm" min="40" max="200" step="1" value="'+MET.bpm+'"> <span id="metBpmV">'+MET.bpm+'</span> BPM</label><label>Volume <input type="range" id="metVol" min="0" max="1" step="0.05" value="'+MET.vol+'"></label><label><input type="checkbox" id="metVis"'+(MET.vis?' checked':'')+'> Flash visuel</label></div>'
+ +'<label class="crow" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="ghOn"'+(GH.on?' checked':'')+'> 👻 Mode fantôme (course contre ton meilleur essai)</label>'
+ +'<div class="crow"><button id="ghClr">Effacer les fantômes</button><button id="flClr">Effacer mes points faibles</button></div>'}
+function metBind(){
+ $('metOn').onchange=e=>{MET.on=e.target.checked;metSave();metUi();metSync()};
+ $('metBpm').oninput=e=>{MET.bpm=+e.target.value;$('metBpmV').textContent=MET.bpm};$('metBpm').onchange=metSave;
+ $('metVol').oninput=e=>{MET.vol=+e.target.value};$('metVol').onchange=metSave;
+ $('metVis').onchange=e=>{MET.vis=e.target.checked;metSave();metUi()};
+ $('ghOn').onchange=e=>ghToggle(e.target.checked);
+ $('ghClr').onclick=()=>{GH.data={};ghSave();$('ghClr').textContent='Fantômes effacés ✔'};
+ $('flClr').onclick=()=>{FAIL={};failSave();tipReset();$('flClr').textContent='Points faibles effacés ✔'};
+}
+$('gico').onclick=()=>{ghToggle(!GH.on);if($('gset').classList.contains('open'))gRender()};
+ghUi();metUi();
+/* ===== Import / export de mouvements ===== */
+function mvPack(list){return 'APEXMV1:'+btoa(unescape(encodeURIComponent(JSON.stringify({v:1,mv:list.map(c=>({name:c.name,reps:c.reps,hold:c.hold,from:c.from,steps:c.steps.map(s=>({k:s.k,w:s.w||''}))}))}))))}
+function mvClean(c){
+ if(!c||typeof c!=='object')throw new Error('mouvement illisible');
+ const name=String(c.name||'').trim().slice(0,30);if(!name)throw new Error('nom manquant');
+ const reps=Math.max(1,Math.min(500,parseInt(c.reps)||1));
+ const hold=(Array.isArray(c.hold)?c.hold:[]).filter(n=>n==='Maj'||n==='Ctrl');
+ const steps=(Array.isArray(c.steps)?c.steps:[]).slice(0,30).map(s=>({k:(Array.isArray(s&&s.k)?s.k:[]).filter(n=>CHIPS.includes(n)),w:s&&(s.w==='down'||s.w==='up')?s.w:''}));
+ if(!steps.length||steps.some(s=>!s.k.length&&!s.w))throw new Error('étapes invalides');
+ return{name,reps,hold,from:Math.max(0,Math.min(steps.length-1,parseInt(c.from)||0)),steps};
+}
+function mvUnpack(txt){
+ let t=String(txt||'').trim();if(!t)throw new Error('rien à importer');
+ let o;try{if(t.indexOf('APEXMV1:')===0)t=decodeURIComponent(escape(atob(t.slice(8).replace(/\s+/g,''))));o=JSON.parse(t)}catch(e){throw new Error('ce n\'est pas un code de partage valide')}
+ const arr=Array.isArray(o)?o:(Array.isArray(o.mv)?o.mv:[o]);
+ if(!arr.length||arr.length>50)throw new Error('nombre de mouvements invalide');
+ return arr.map(mvClean);
+}
+function shareHtml(){return '<h4>📤 Partager</h4><div class="crow"><button id="cExpAll">Exporter tous mes mouvements</button><button id="cImp">Importer le code ci-dessous</button></div><textarea id="cCode" rows="4" style="width:100%;box-sizing:border-box;font:inherit;padding:6px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--fg)" placeholder="Code de partage (APEXMV1:…) : colle-le ici pour l\'importer, ou récupère-le ici après un export"></textarea><div class="crow"><button id="cCopy">Copier</button><span id="cShareMsg"></span></div>'}
+function shareCopy(code){try{Promise.resolve(navigator.clipboard.writeText(code)).catch(()=>{});return true}catch(e){return false}}
+function shareOut(list){list=list.filter(Boolean);if(!list.length){$('cShareMsg').textContent='Aucun mouvement à exporter.';return}
+ const code=mvPack(list);$('cCode').value=code;$('cCode').select();
+ $('cShareMsg').textContent=list.length+' mouvement(s) exporté(s)'+(shareCopy(code)?' · code copié ✔':' · copie le code ci-dessus')}
+function shareBind(){
+ $('cExpAll').onclick=()=>shareOut(CUS);
+ $('cCopy').onclick=()=>{const t=$('cCode').value;if(!t)return;$('cCode').select();$('cShareMsg').textContent=shareCopy(t)?'Code copié ✔':'Sélectionne et copie le code'};
+ $('cImp').onclick=()=>{try{const list=mvUnpack($('cCode').value);
+  list.forEach((c,i)=>{let name=c.name;if(CUS.some(x=>x.name===name))name=(name+' (import)').slice(0,30);const m={id:Date.now().toString(36)+i,name,reps:c.reps,hold:c.hold,from:c.from,steps:c.steps};CUS.push(m);cusRegister(m)});
+  applyAuto();cusSave();tabs();cusList();$('cShareMsg').textContent=list.length+' mouvement(s) importé(s) ✔'}
+  catch(e){$('cShareMsg').textContent='Code invalide : '+(e.message||'format inconnu')}}}
+
+
 
 
 

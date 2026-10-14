@@ -12,6 +12,11 @@ html,body{margin:0;background:transparent;overflow:hidden;font-family:Arial,Helv
 #Ctrl{left:96px;top:132px;width:84px;height:46px;font-size:16px}
 #Esp{left:186px;top:132px;width:140px;height:46px;font-size:16px}
 #up{left:240px;top:6px;font-size:24px}#down{left:240px;top:66px;font-size:24px}
+body.moving #o{outline:2px dashed var(--a1);outline-offset:3px;cursor:move}
+#mvb{display:none;position:absolute;right:6px;bottom:6px;align-items:center;gap:8px;padding:5px 8px;border-radius:10px;background:color-mix(in srgb,var(--bg) 92%,transparent);color:var(--tx);font-size:12px;font-weight:700;z-index:5}
+body.moving #mvb{display:flex}
+#mvb button{font:inherit;font-size:12px;padding:3px 10px;border-radius:8px;border:0;cursor:pointer;background:linear-gradient(135deg,var(--a1),var(--a2));color:var(--bg)}
+#o{position:relative}
 #sq{width:290px;box-sizing:border-box;background:color-mix(in srgb,var(--bg) 80%,transparent);border:2px solid color-mix(in srgb,var(--tx) 22%,transparent);border-radius:14px;padding:8px;color:var(--tx)}
 #sq .h{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin:0 2px 6px}
 #sq .h b{font-size:13px}#sq .h span{color:color-mix(in srgb,var(--tx) 78%,transparent)}
@@ -30,6 +35,7 @@ html,body{margin:0;background:transparent;overflow:hidden;font-family:Arial,Helv
 <div class="k" id="up">▲</div><div class="k" id="down">▼</div>
 </div>
 <div id="sq"></div>
+<div id="mvb"><span>↔ Glisse pour déplacer</span><button id="mvok">Valider</button></div>
 </div>
 <script>
 const $=id=>document.getElementById(id);
@@ -57,7 +63,7 @@ function renderSeq(){
   let h='<div class="h"><b>'+esc(S.name)+'</b><span>'+(total>1?esc(S.label||'Rép.')+' '+n+'/'+total:'')+(last?' · '+Math.round(last/S.per)+' ms':'')+'</span></div>';
   if(S.hold.length)h+='<div class="r hold">'+S.hold.map(x=>'<div class="c" data-c="'+esc(x.c)+'">'+esc(x.l)+'</div>').join('')+'<span class="t">maintenir'+(S.from?' dès l\'étape '+(S.from+1):'')+'</span></div>';
   S.steps.forEach((s,i)=>{
-    h+='<div class="r'+(i<si?' done':i===si?' cur':'')+'">'+s.k.map(x=>'<div class="c" data-c="'+esc(x.c)+'">'+esc(x.l)+'</div>').join('')+(s.w?'<div class="c'+(i===si&&wh===s.w?' on':'')+'">🖱 '+esc(whLabel(s.w))+'</div>':'')+'<span class="t">'+esc(s.t||'')+'</span></div>';
+    h+='<div class="r'+(i<si?' done':i===si?' cur':'')+'">'+s.k.map(x=>'<div class="c"'+(i===si?' data-c="'+esc(x.c)+'"':'')+'>'+esc(x.l)+'</div>').join('')+(s.w?'<div class="c'+(i===si&&wh===s.w?' on':'')+'">🖱 '+esc(whLabel(s.w))+'</div>':'')+'<span class="t">'+esc(s.t||'')+'</span></div>';
   });
   P.innerHTML=h;paintKeys();report();
 }
@@ -82,6 +88,11 @@ function check(){
   renderSeq();
 }
 
+window.apexOverlay.onMoving(v=>{document.body.classList.toggle('moving',!!v);report()});
+let dragging=false;
+$('o').addEventListener('mousedown',e=>{if(!document.body.classList.contains('moving')||e.target.closest('#mvb'))return;dragging=true;window.apexOverlay.drag('start');e.preventDefault()});
+window.addEventListener('mouseup',()=>{if(dragging){dragging=false;window.apexOverlay.drag('end')}});
+$('mvok').addEventListener('click',()=>window.apexOverlay.move(false));
 window.apexOverlay.onOpts(o=>{
   O=Object.assign(O,o);if(o.colors)Object.keys(o.colors).forEach(k=>document.documentElement.style.setProperty('--'+k,o.colors[k]));
   Object.keys(O.keys).forEach(n=>{const e=$(n);if(e)e.textContent=O.keys[n].l});

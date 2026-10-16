@@ -83,3 +83,11 @@ Au lancement du `setup.exe`, une fenêtre propose le **français** ou l'**anglai
   Sa position est mémorisée.
 - **➕ Mes mouvements → Partager** : « Exporter » génère un code (`APEXMV1:…`) à copier-coller dans Discord, par exemple ;
   « Importer » ajoute les mouvements d'un code reçu.
+
+## Paramètres en onglets, double bind et Superglide
+
+- **⚙ Paramètres** est organisé en onglets : Touches, Superglide, Entraînement, Overlay, Apparence, Mises à jour.
+- **Double bind** : chaque action peut avoir une 2e touche (« + Ajouter » dans l'onglet Touches). Les deux touches sont
+  prises en compte partout : exercices, Superglide et overlay.
+- **Superglide** : les FPS ne sont demandés qu'à la première ouverture ; ils se changent ensuite dans
+  ⚙ Paramètres → Superglide.

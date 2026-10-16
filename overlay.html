@@ -113,7 +113,7 @@ window.apexOverlay.onInput(e=>{
     if(a&&S){wh=a;check();renderSeq()}
     return;
   }
-  const c=e.c;
+  const c=(O.alias&&O.alias[e.c])||e.c;
   if(e.t==='kd'){
     held.add(c);
     const ka=actFromKey(c);
